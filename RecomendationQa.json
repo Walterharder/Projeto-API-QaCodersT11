@@ -1,0 +1,57 @@
+{
+	"id": "026e045d-969f-40c6-a387-b2deeeda031b",
+	"name": "Local",
+	"values": [
+		{
+			"key": "url",
+			"value": "127.0.0.1:3000",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Description",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Stars",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Situation",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Status",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "firstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "lastName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-11-09T00:25:11.602Z",
+	"_postman_exported_using": "Postman/10.19.17"
+}

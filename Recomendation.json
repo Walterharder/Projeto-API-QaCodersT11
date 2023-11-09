@@ -1,0 +1,822 @@
+{
+	"info": {
+		"_postman_id": "95728df5-200d-431d-8da3-9b11300d4fd6",
+		"name": "Recomendation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18222806"
+	},
+	"item": [
+		{
+			"name": "Validação de Sucesso",
+			"item": [
+				{
+					"name": "Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Sucesso Completo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"/*pm.environment.set(\"FullName\",pm.variables.replaceIn('{{$randomFullName}}'))*/\r",
+									"\r",
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\",\"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\",\"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\",\"Harder Silva\",\"Harder\",\"Dos Anjos\" , \"Barros Neto de Andrade\",\"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimaråes\", \"Dias de Jesus\",\"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\",\"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\",\"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"lastName\",lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\",pm.variables.get(\"firstName\") + \" \" + pm.variables.get(\"lastName\"));\r",
+									"\r",
+									"pm.environment.set(\"Description\",pm.variables.replaceIn('{{$randomLoremSentence}}'))\r",
+									"\r",
+									"pm.environment.set(\"Stars\", Math.floor(Math.random() * (5 * 1) + 1))\r",
+									"\r",
+									"/*function situation() {\r",
+									"    var situation = [\"Pendente\", \"Aprovado\", \"Reprovado\"];\r",
+									"\r",
+									"    var randomItem = situation[Math.floor(Math.random() * situation.length)];\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Situation\", situation())*/\r",
+									"\r",
+									"/*pm.environment.set(\"Status\",pm.variables.replaceIn('{{$randomBoolean}}'))*/\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o Nome gravado é o mesmo enviado\", function () {\r",
+									"    pm.expect(pm.variables.get(\"FullName\")).to.eql(JSON.parse(responseBody).fullName)     \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a Descrição gravada é a mesma enviada\", function () {\r",
+									"    pm.expect(pm.variables.get(\"Description\")).to.eql(JSON.parse(responseBody).description)     \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a Estrela gravada é a mesma enviada\", function () {\r",
+									"    pm.expect(pm.variables.get(\"Stars\")).to.eql(JSON.parse(responseBody).stars)     \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a Situação gravada está como 'Pendente'\", function () {\r",
+									"    pm.expect(\"Pendente\").to.eql(JSON.parse(responseBody).situation)     \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o Status gravado é o mesmo enviado\", function () {\r",
+									"    pm.expect(true).to.eql(JSON.parse(responseBody).status)     \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"description\": \"{{Description}}\",\r\n    \"stars\": {{Stars}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validação de Exceção",
+			"item": [
+				{
+					"name": "Recomendation - Validação campo Nome incompleto",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a mensagem de nome e sobrenome obrigatórios\", function () {\r",
+									"    pm.expect(\"Informe o nome e sobrenome.\").to.eql(JSON.parse(responseBody).alert[0])      \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{firstName}}\",\r\n    \"description\": \"Gravação de registro.\",\r\n    \"stars\": 1,\r\n    \"situation\": \"Pendente\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Validação  campo Nome nulo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a mensagem de nome obrigatório\", function () {\r",
+									"    pm.expect(\"O campos Nome Completo é obrigatório.\").to.eql(JSON.parse(responseBody).alert[0])      \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"\",\r\n    \"description\": \"Gravação de registro.\",\r\n    \"stars\": 1,\r\n    \"situation\": \"Pendente\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Validação campo Description Nulo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\",\"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\",\"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\",\"Harder Silva\",\"Harder\",\"Dos Anjos\" , \"Barros Neto de Andrade\",\"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimaråes\", \"Dias de Jesus\",\"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\",\"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\",\"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"lastName\",lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\",pm.variables.get(\"firstName\") + \" \" + pm.variables.get(\"lastName\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a mensagem de descrição obrigatória\", function () {\r",
+									"    pm.expect(\"O campo 'description' é obrigatório.\").to.eql(JSON.parse(responseBody).errors[0])      \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"description\": \"\",\r\n    \"stars\": \"5\",\r\n    \"situation\": \"Pendente\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Validação campo Stars Nulo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\",\"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\",\"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\",\"Harder Silva\",\"Harder\",\"Dos Anjos\" , \"Barros Neto de Andrade\",\"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimaråes\", \"Dias de Jesus\",\"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\",\"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\",\"de Paula da Silva\", \"Barbosa de Mello oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"lastName\",lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\",pm.variables.get(\"firstName\") + \" \" + pm.variables.get(\"lastName\"));\r",
+									"\r",
+									"pm.environment.set(\"Description\",pm.variables.replaceIn('{{$randomLoremSentence}}'))"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a mensagem do campo Stars obrigatória\", function () {\r",
+									"    pm.expect(\"Informe a quantidade de estrelas que deseja classificar.\").to.eql(JSON.parse(responseBody).alert[0])      \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"description\": \"{{Description}}\",\r\n    \"stars\": \"\",\r\n    \"situation\": \"Pendente\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Validação o campo Situation apenas com 'Pendente'",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\",\"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\",\"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\",\"Harder Silva\",\"Harder\",\"Dos Anjos\" , \"Barros Neto de Andrade\",\"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimaråes\", \"Dias de Jesus\",\"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\",\"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\",\"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"lastName\",lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\",pm.variables.get(\"firstName\") + \" \" + pm.variables.get(\"lastName\"));\r",
+									"\r",
+									"pm.environment.set(\"Description\",pm.variables.replaceIn('{{$randomLoremSentence}}'))\r",
+									"\r",
+									"pm.environment.set(\"Stars\", Math.floor(Math.random() * (5 * 1) + 1))\r",
+									"\r",
+									"function situation() {\r",
+									"    var situation = [\"Aprovado\", \"Reprovado\"];\r",
+									"\r",
+									"    var randomItem = situation[Math.floor(Math.random() * situation.length)];\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Situation\", situation())\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar a Situação gravada está como 'Pendente'\", function () {\r",
+									"    pm.expect(\"Pendente\").to.eql(JSON.parse(responseBody).situation)     \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"description\": \"{{Description}}\",\r\n    \"stars\": \"{{Stars}}\",\r\n    \"situation\": \"{{Situation}}\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Validação o campo Status apenas com 'True'",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\",\"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\",\"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\",\"Harder Silva\",\"Harder\",\"Dos Anjos\" , \"Barros Neto de Andrade\",\"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimaråes\", \"Dias de Jesus\",\"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\",\"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\",\"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"lastName\",lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\",pm.variables.get(\"firstName\") + \" \" + pm.variables.get(\"lastName\"));\r",
+									"\r",
+									"pm.environment.set(\"Description\",pm.variables.replaceIn('{{$randomLoremSentence}}'))\r",
+									"\r",
+									"pm.environment.set(\"Stars\", Math.floor(Math.random() * (5 * 1) + 1))\r",
+									"\r",
+									"function situation() {\r",
+									"    var situation = [\"Aprovado\", \"Reprovado\"];\r",
+									"\r",
+									"    var randomItem = situation[Math.floor(Math.random() * situation.length)];\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Situation\", situation())\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o Status gravado é sempre True\", function () {\r",
+									"    pm.expect(true).to.eql(JSON.parse(responseBody).status)     \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"description\": \"{{Description}}\",\r\n    \"stars\": \"{{Stars}}\",\r\n    \"situation\": \"{{Situation}}\",\r\n    \"status\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Validação o campo Description com 500 caracteres",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\",\"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\",\"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\",\"Harder Silva\",\"Harder\",\"Dos Anjos\" , \"Barros Neto de Andrade\",\"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimaråes\", \"Dias de Jesus\",\"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\",\"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\",\"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"lastName\",lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\",pm.variables.get(\"firstName\") + \" \" + pm.variables.get(\"lastName\"));\r",
+									"\r",
+									"pm.environment.set(\"Stars\", Math.floor(Math.random() * (5 * 1) + 1))\r",
+									"\r",
+									"\r",
+									"function geraStringAleatoria(tamanho) {\r",
+									"    var stringAleatoria = '';\r",
+									"    var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+									"    for (var i = 0; i < tamanho; i++) {\r",
+									"        stringAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return stringAleatoria;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Description\", geraStringAleatoria(500))\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o campo Description com os 500 caracteres enviados\", function () {\r",
+									"      pm.expect(pm.variables.get(\"Description\")).to.eql(JSON.parse(responseBody).description)     \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"description\": \"{{Description}}\",\r\n    \"stars\": \"{{Stars}}\",\r\n    \"situation\": \"Pendente\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recomendation - Validação o campo Description com 501 caracteres",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"    var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\", \"Bernardo\", \"Laura\",\"Lucas\",\"flávia\",\"Luiza\",\"Matheus\",\"Noah\",\"Valentina\",\"Rafael\", \"G1ovanna\",\"Heitor\",\"Enzo\",\"Helena\", \"Goilherme\",\"Beatriz\",\"Nicolas\",\"Letlcla\",\"Lorenzo\",\"Lara\", \"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\", \"Samuel\", \"Joice\", \"Dener\", \"Rafaela\" , \"Augusto\", \"Heloisa\", \"Daniel\",\"Isadora\" ,\"Vitor\",\"Livla\",\"Leonardo\", \"Henrique\",\"Juliana\" , \"Theo\", \"Lorena\", \"Murilo\", \"Gabrisla\" , \"Eduardo\", \"Yasmin\",\"Pedro\",\"Henriqueta\", \"Isabelly\" ,\"Pietzo\", \"Sarah\",\"Kauā\", \"Jaqueline\", \"Isaac\",\"Leticia\", \"Caio\", \"Mariele\", \"Vinicius\", \"Melissa\", \"Benjamin\",\"Marina\",\"João\", \"Clara\" , \"Lucca\" , \"Cecilia\" ,\"Miguel\" , \"Esther\" , \"Bryan\", \"Emanuelly\", \"Joaquin\" , \"Rebeca\", \"Victor\", \"Bella\", \"Thlago\",\"Lavinia\",\"Antônio\", \"Vitória\", \"Marlo\", \"Bianca\",\"Francisco\", \"Catarina\" , \"Ronaldo\",\"Larissa\",\"Bzuno\",\"Margarida\",\"Emanuel\", \"Fernanda\",\"Marcos\", \"Amanda\",\"Ian\",\"Alicia\",\"Luiz\", \"Carolina\" , \"Rodrigo\",\"Agatha\", \"Otávio\", \"Gabrielly\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"firstName\",firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\",\"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\",\"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\",\"Harder Silva\",\"Harder\",\"Dos Anjos\" , \"Barros Neto de Andrade\",\"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimaråes\", \"Dias de Jesus\",\"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\",\"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\",\"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"lastName\",lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\",pm.variables.get(\"firstName\") + \" \" + pm.variables.get(\"lastName\"));\r",
+									"\r",
+									"pm.environment.set(\"Stars\", Math.floor(Math.random() * (5 * 1) + 1))\r",
+									"\r",
+									"\r",
+									"function geraStringAleatoria(tamanho) {\r",
+									"    var stringAleatoria = '';\r",
+									"    var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+									"    for (var i = 0; i < tamanho; i++) {\r",
+									"        stringAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return stringAleatoria;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Description\", geraStringAleatoria(501))\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar mensagem de alerta de quantidade de caracteres\", function () {\r",
+									"      pm.expect(\"O campo permite apenas 500 caracteres.\").to.eql(JSON.parse(responseBody).alert[0])     \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"description\": \"{{Description}}\",\r\n    \"stars\": \"{{Stars}}\",\r\n    \"situation\": \"Pendente\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/recommendation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recomendation - Alteração",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"654989a70e0eddb107fb0662\",\r\n    \"fullName\": \"Marcela Harder Silva\",\r\n    \"description\": \"Gravação de registro, ALTERAÇÃO\",\r\n    \"stars\": 5,\r\n    \"situation\": \"Pendente\",\r\n    \"status\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/recommendation/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"recommendation",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recomendation - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/recommendation/65498a4c0e0eddb107fb0668",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"recommendation",
+						"65498a4c0e0eddb107fb0668"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
